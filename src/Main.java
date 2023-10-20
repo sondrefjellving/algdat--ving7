@@ -13,7 +13,7 @@ public class Main {
 
                 WeightedGraphTable graph = new WeightedGraphTable();
                 graph.createWeightedGraphTable(br);
-                System.out.println(graph.maxFlow(0, 7));
+                System.out.println(graph.maxFlow(0, 1));
                 System.out.println(graph.toString());
 
             } catch (IOException e) {

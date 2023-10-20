@@ -29,13 +29,24 @@ public class WeightedGraphTable {
             int from = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
             int weight = Integer.parseInt(st.nextToken());
+
             edges[from][to].registerAsExisting();
             edges[from][to].addWeight(weight);
-            edges[to][from].registerAsExisting(); // Add the reverse edge
-            edges[to][from].addWeight(weight);     // Initialize the reverse edge's weight
 
-            edges[from][to].setReverseEdge(edges[to][from]);
-            edges[to][from].setReverseEdge(edges[from][to]);
+            if (edges[to][from].doesExist()) {
+                edges[from][to].setReverseEdge(edges[to][from]);
+                edges[to][from].setReverseEdge(edges[from][to]);
+            }
+        }
+
+        for (int i = 0; i < numberOfNodes; i++) {
+            for (int j = 0; j < numberOfNodes; j++) {
+                if (!edges[i][j].hasReverseEdge()) {
+                    edges[j][i].addWeight(0);
+                    edges[i][j].setReverseEdge(edges[j][i]);
+                    edges[j][i].setReverseEdge(edges[i][j]);
+                }
+            }
         }
     }
 
@@ -61,6 +72,8 @@ public class WeightedGraphTable {
                     }
                 }
             }
+
+            System.out.println(Arrays.toString(visited));
 
             if (visited[endNode] == -1) {
                 break; // Didn't find endNode
